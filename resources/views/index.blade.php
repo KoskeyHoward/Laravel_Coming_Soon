@@ -121,8 +121,7 @@
 <!--  H1 can have 2 designs: "logo" and "logo cursive"           -->
         
         <div class="content">
-          <h3 style="text-align: center;">UTC</h3>
-           <div id='counter-timezone-default' class='counter'></div>
+           <div id='counter-timezone-default' class='counter' style="color:white ;"></div>
             <h4 class="motto"><marquee> We are going live soon</marquee></h4>
             <div class="subscribe">
                 <h5 class="info-text">
