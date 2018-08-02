@@ -15,14 +15,21 @@
     <!--     Fonts     -->
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
-    <!-- clock --> 
-    <link rel="stylesheet" href="../compiled/flipclock.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="../compiled/flipclock.js"></script>
-  
+    <link rel="stylesheet" href="countdowncube.css">
+    <style class="inlinestyle">
+      .counter {
+        margin: 10 auto;
+        text-align: center;
+      }
+    </style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data-2012-2022.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="countdowncube.js"></script>
 </head>
 
 <body>
+
 <nav class="navbar navbar-transparent navbar-fixed-top" role="navigation">  
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -114,6 +121,8 @@
 <!--  H1 can have 2 designs: "logo" and "logo cursive"           -->
         
         <div class="content">
+          <h3 style="text-align: center;">UTC</h3>
+           <div id='counter-timezone-default' class='counter'></div>
             <h4 class="motto"><marquee> We are going live soon</marquee></h4>
             <div class="subscribe">
                 <h5 class="info-text">
@@ -133,8 +142,6 @@
                 </div>
             </div>
         </div>
-     <div class="clock" style="margin:2em;"></div>
-  <div class="message"></div>
     </div>
     <div class="footer">
       <div class="container">
@@ -142,28 +149,74 @@
       </div>
     </div>
  </div>
- <script type="text/javascript">
-    var clock;
-    
-    $(document).ready(function() {
-      var clock;
+<script>
+      var targetDate = new Date();
+      targetDate.setMonth(targetDate.getMonth() + 1)
+      targetDate.setDate(1)
+      targetDate.setHours(11)
+      targetDate.setMinutes(0)
+      targetDate.setSeconds(0)
+      targetDate.setMilliseconds(0);
 
-      clock = $('.clock').FlipClock({
-            clockFace: 'DailyCounter',
-            autoStart: false,
-            callbacks: {
-              stop: function() {
-                $('.message').html('The clock has stopped!')
-              }
-            }
-        });
-            
-        clock.setTime(220880);
-        clock.setCountdown(true);
-        clock.start();
+      var targetDateStringUTC = targetDate.toISOString()
+                                          .replace(':00.000', '');
+      var targetDateString = targetDateStringUTC.replace('Z', '');
 
-    });
-  </script> 
+      var targetLADate = moment.tz(targetDateStringUTC,
+                                   'America/Los_Angeles').format();
+      var tzLAOffset = targetLADate.substr(-6);
+      var targetDateStringOffset = targetDateString.replace('Z', '')
+                                       .replace(':00.000', '') +
+                                       tzLAOffset;
+
+      var tzOldFormatOffset = targetDateString.substr(-5);
+      var targetDateOldFormatString = targetDate.toLocaleDateString() +
+                                      ' ' + tzOldFormatOffset;
+
+      var pastDate = new Date();
+      pastDate.setMonth(targetDate.getMonth() - 18)
+      pastDate.setMinutes(0);
+      pastDate.setSeconds(0);
+      pastDate.setMilliseconds(0);
+      var targetDateStringPast = pastDate.toISOString()
+                                         .replace(':00.000', '');
+      var nearFutureDate = new Date();
+      nearFutureDate.setSeconds(nearFutureDate.getSeconds() + 10);
+      nearFutureDate.setMilliseconds(0);
+      var nearFutureDateString = nearFutureDate.toISOString()
+
+      $('.example').each(function() {
+        var str = $( this ).html()
+        var newstr = str.replace("{targetDateString}",
+                             targetDateString )
+                    .replace("{targetDateStringUTC}",
+                             targetDateStringUTC )
+                    .replace("{targetDateStringOffset}",
+                             targetDateStringOffset )
+                    .replace("{targetDateOldFormatString}",
+                             targetDateOldFormatString )
+                    .replace("{nearFutureDateString}",
+                             nearFutureDateString )
+                    .replace("{targetDateStringPast}",
+                             targetDateStringPast );
+
+        $( this ).html(newstr);
+      } );
+
+    </script>
+    <script>
+      
+
+      $('#counter-timezone-default').countdownCube( {
+        target: targetDateString,
+        cubeSize: 100,
+        background:  'azure',
+        color: 'forestgreen',
+      } );
+      
+
+     
+    </script>
  </body>
    <script src="js/jquery-1.10.2.js" type="text/javascript"></script>
    <script src="js/bootstrap.min.js" type="text/javascript"></script>
