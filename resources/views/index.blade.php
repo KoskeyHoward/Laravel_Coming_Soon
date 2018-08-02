@@ -15,6 +15,10 @@
     <!--     Fonts     -->
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
+    <!-- clock --> 
+    <link rel="stylesheet" href="../compiled/flipclock.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../compiled/flipclock.js"></script>
   
 </head>
 
@@ -59,13 +63,13 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="#"> 
+                <a href="https://www.facebook.com/howard.cosk"> 
                     <i class="fa fa-facebook-square"></i>
                     Share
                 </a>
             </li>
              <li>
-                <a href="#"> 
+                <a href="https://twitter.com/Howard_Koskey"> 
                     <i class="fa fa-twitter"></i>
                     Tweet
                 </a>
@@ -129,6 +133,8 @@
                 </div>
             </div>
         </div>
+     <div class="clock" style="margin:2em;"></div>
+  <div class="message"></div>
     </div>
     <div class="footer">
       <div class="container">
@@ -136,6 +142,28 @@
       </div>
     </div>
  </div>
+ <script type="text/javascript">
+    var clock;
+    
+    $(document).ready(function() {
+      var clock;
+
+      clock = $('.clock').FlipClock({
+            clockFace: 'DailyCounter',
+            autoStart: false,
+            callbacks: {
+              stop: function() {
+                $('.message').html('The clock has stopped!')
+              }
+            }
+        });
+            
+        clock.setTime(220880);
+        clock.setCountdown(true);
+        clock.start();
+
+    });
+  </script> 
  </body>
    <script src="js/jquery-1.10.2.js" type="text/javascript"></script>
    <script src="js/bootstrap.min.js" type="text/javascript"></script>
