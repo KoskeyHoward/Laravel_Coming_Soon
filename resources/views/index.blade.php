@@ -116,7 +116,7 @@
 
     <div class="container">
         <h1 class="logo cursive">
-            Civian Software Solutions
+            Civian Software Solutions 
         </h1>
 <!--  H1 can have 2 designs: "logo" and "logo cursive"           -->
         
